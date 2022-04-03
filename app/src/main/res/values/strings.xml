@@ -2,5 +2,5 @@
     <string name="app_name">ChallengeChapter4</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="belum_punya_akun">Belum punya akun? Klik disini untuk <font color='#ffffffff'>Daftar</font></string>
+    <string name="belum_punya_akun"><font color='00000000'>Belum punya akun? Klik disini untuk </font><font color='#00AEFF'>Daftar</font></string>
 </resources>

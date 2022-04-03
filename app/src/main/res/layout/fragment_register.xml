@@ -92,13 +92,28 @@
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_daftar"
-        android:layout_width="128dp"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="32dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="@color/blue"
         android:text="Daftar"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="18sp"
+        app:cornerRadius="16dp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_masuk"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="32dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/blue"
+        android:text="Masuk"
+        android:textAllCaps="false"
+        android:textColor="@color/blue"
         android:textSize="18sp"
         app:cornerRadius="16dp" />
 

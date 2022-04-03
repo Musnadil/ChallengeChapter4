@@ -47,6 +47,9 @@ class RegisterFragment : Fragment() {
                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment, bundle)
             }
         }
+        binding.btnMasuk.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        }
     }
 
     override fun onDestroy() {

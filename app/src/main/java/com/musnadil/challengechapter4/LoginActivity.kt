@@ -14,7 +14,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val window = this.window
-        window.statusBarColor = ContextCompat.getColor(this,R.color.young_blue)
+        window.statusBarColor = ContextCompat.getColor(this,R.color.white)
 
         WindowInsetsControllerCompat(window,window.decorView)
             .isAppearanceLightStatusBars = true
