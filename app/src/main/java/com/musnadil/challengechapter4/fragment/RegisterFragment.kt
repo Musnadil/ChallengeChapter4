@@ -5,11 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.musnadil.challengechapter4.R
+import com.musnadil.challengechapter4.StoreDatabase
+import com.musnadil.challengechapter4.User
 import com.musnadil.challengechapter4.databinding.FragmentRegisterBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 class RegisterFragment : Fragment() {
+    var mDb:StoreDatabase?=null
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
@@ -27,6 +34,8 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mDb = StoreDatabase.getInstance(requireContext())
+
         binding.btnDaftar.setOnClickListener {
             if (binding.etUsername.text.isNullOrEmpty()) {
                 binding.wrapUsername.error = "Username kamu belum diisi"
@@ -40,6 +49,23 @@ class RegisterFragment : Fragment() {
                 binding.wrapKonfirPassword.error = "Password tidak sama"
                 binding.etKonfirPassword.setText("")
             } else {
+                val objectUser = User(
+                    null,
+                    binding.etUsername.text.toString(),
+                    binding.etEmail.text.toString(),
+                    binding.etPassword.text.toString()
+                )
+                GlobalScope.async {
+                    val result =mDb?.storeDao()?.addUser(objectUser)
+                    runBlocking {
+                        if (result != 0.toLong()){
+                            Toast.makeText(activity, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
+                        }else{
+                            Toast.makeText(activity, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
+                        }
+                        onStop()
+                    }
+                }
                 val username = binding.etUsername.text.toString()
                 val bundle = Bundle().apply {
                     putString(USERNAME, username)

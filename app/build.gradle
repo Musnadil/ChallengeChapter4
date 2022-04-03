@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -49,4 +51,13 @@ dependencies {
     //library lottie
     def lottieVersion = "5.0.3"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    //library room
+    def roomVersion = "2.4.2"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    //library coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 }

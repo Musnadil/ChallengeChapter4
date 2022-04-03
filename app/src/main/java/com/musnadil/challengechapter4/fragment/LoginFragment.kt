@@ -28,7 +28,7 @@ class LoginFragment : Fragment() {
         }
         val username = arguments?.getString(RegisterFragment.USERNAME)
         if (username.isNullOrEmpty()){
-            binding.etUsername.hint = "Username"
+            binding.etUsername.hint = ""
         }else {
             binding.etUsername.setText(username)
         }
