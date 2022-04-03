@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class, Item::class], version = 1)
 abstract class StoreDatabase():RoomDatabase(){
     abstract fun storeDao() : UserDao
+    abstract fun itemDao() : ItemDao
+
     companion object{
         private var INSTANCE: StoreDatabase? = null
 

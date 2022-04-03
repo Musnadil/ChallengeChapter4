@@ -8,4 +8,6 @@
     <string name="nama_barang">Nama Barang</string>
     <string name="harga_beli">Harga beli</string>
     <string name="harga_jual">Harga jual</string>
+    <string name="welcome_user">Welcome user</string>
+    <string name="logout">Logout</string>
 </resources>
