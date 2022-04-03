@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.musnadil.challengechapter4.fragment.LoginFragment"
-        android:label="fragment_login_fragmrnt"
+        android:label="fragment_login_fragment"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
