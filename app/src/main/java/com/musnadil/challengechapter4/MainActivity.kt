@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.musnadil.challengechapter4.databinding.ActivityMainBinding
+import com.musnadil.challengechapter4.fragment.AddListFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -16,6 +17,9 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this,R.color.white)
         WindowInsetsControllerCompat(window,window.decorView)
             .isAppearanceLightStatusBars = true
-
+        binding.fabNewItem.setOnClickListener{
+            val dialogFragment = AddListFragment()
+            dialogFragment.show(supportFragmentManager,null)
+        }
     }
 }

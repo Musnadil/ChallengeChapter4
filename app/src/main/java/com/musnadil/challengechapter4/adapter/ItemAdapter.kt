@@ -21,8 +21,6 @@ class ItemAdapter (private val listItem : List<Item>): RecyclerView.Adapter<Item
             tvHargaBeli.text = listItem[position].purchase_price.toString()
             tvHargaJual.text = listItem[position].selling_price.toString()
         }
-
     }
-
     override fun getItemCount(): Int =listItem.size
 }
