@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.musnadil.challengechapter4.LoginActivity
@@ -17,19 +16,17 @@ import com.musnadil.challengechapter4.MainActivity
 import com.musnadil.challengechapter4.R
 import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.databinding.FragmentLoginBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
+@DelicateCoroutinesApi
 class LoginFragment : Fragment() {
-    var mDb: StoreDatabase? = null
+    private var mDb: StoreDatabase? = null
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -50,32 +47,36 @@ class LoginFragment : Fragment() {
 
         binding.btnMasuk.setOnClickListener {
 
-            if (binding.etUsername.text.isNullOrEmpty()) {
-                binding.wrapUsername.error = "Kamu harus masukan username"
-            } else if (binding.etPassword.text.isNullOrEmpty()) {
-                binding.wrapPassword.error = "Kamu harus masukan password"
-            } else {
-                GlobalScope.async {
-                    val result = mDb?.storeDao()?.userCheck(
-                        binding.etUsername.text.toString(),
-                        binding.etPassword.text.toString()
-                    )
-                    runBlocking(Dispatchers.Main) {
-                        if (result == false) {
-                            closeKeyboard()
-                            val snackbar = Snackbar.make(it,"Gagal masuk mungkin anda salah memasukan email atau password",Snackbar.LENGTH_INDEFINITE)
-                            snackbar.setAction("Oke") {
-                                snackbar.dismiss()
-                                binding.etUsername.requestFocus()
-                                binding.etUsername.setText("")
-                                binding.etPassword.setText("")
+            when {
+                binding.etUsername.text.isNullOrEmpty() -> {
+                    binding.wrapUsername.error = "Kamu harus masukan username"
+                }
+                binding.etPassword.text.isNullOrEmpty() -> {
+                    binding.wrapPassword.error = "Kamu harus masukan password"
+                }
+                else -> {
+                    GlobalScope.async {
+                        val result = mDb?.storeDao()?.userCheck(
+                            binding.etUsername.text.toString(),
+                            binding.etPassword.text.toString()
+                        )
+                        runBlocking(Dispatchers.Main) {
+                            if (result == false) {
+                                closeKeyboard()
+                                val snackbar = Snackbar.make(it,"Gagal masuk mungkin anda salah memasukan email atau password",Snackbar.LENGTH_INDEFINITE)
+                                snackbar.setAction("Oke") {
+                                    snackbar.dismiss()
+                                    binding.etUsername.requestFocus()
+                                    binding.etUsername.setText("")
+                                    binding.etPassword.setText("")
+                                }
+                                snackbar.show()
+                            } else {
+                                Toast.makeText(activity, "Selamat datang ${binding.etUsername.text.toString()}", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(activity,MainActivity::class.java))
+                                onDestroy()
+                                activity?.finish()
                             }
-                            snackbar.show()
-                        } else {
-                            Toast.makeText(activity, "Selamat datang ${binding.etUsername.text.toString()}", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(activity,MainActivity::class.java))
-                            onDestroy()
-                            activity?.finish()
                         }
                     }
                 }
@@ -83,13 +84,13 @@ class LoginFragment : Fragment() {
         }
     }
 
-    fun closeKeyboard() {
+    private fun closeKeyboard() {
         val activity = activity as LoginActivity
 
         val view = activity.currentFocus
         if (view != null) {
             val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view!!.getWindowToken(), 0)
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 

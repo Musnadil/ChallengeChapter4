@@ -11,12 +11,14 @@ import com.musnadil.challengechapter4.R
 import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.User
 import com.musnadil.challengechapter4.databinding.FragmentRegisterBinding
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
+@DelicateCoroutinesApi
 class RegisterFragment : Fragment() {
-    var mDb:StoreDatabase?=null
+    private var mDb:StoreDatabase?=null
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
@@ -37,40 +39,47 @@ class RegisterFragment : Fragment() {
         mDb = StoreDatabase.getInstance(requireContext())
 
         binding.btnDaftar.setOnClickListener {
-            if (binding.etUsername.text.isNullOrEmpty()) {
-                binding.wrapUsername.error = "Username kamu belum diisi"
-            } else if (binding.etEmail.text.isNullOrEmpty()) {
-                binding.wrapEmail.error = "Email kamu belum diisi"
-            } else if (binding.etPassword.text.isNullOrEmpty()) {
-                binding.wrapPassword.error = "Password kamu belum diisi"
-            } else if (binding.etKonfirPassword.text.isNullOrEmpty()) {
-                binding.wrapKonfirPassword.error = "Kamu perlu konfirmasi password"
-            } else if (binding.etPassword.text.toString().lowercase() != binding.etKonfirPassword.text.toString().lowercase()){
-                binding.wrapKonfirPassword.error = "Password tidak sama"
-                binding.etKonfirPassword.setText("")
-            } else {
-                val objectUser = User(
-                    null,
-                    binding.etUsername.text.toString(),
-                    binding.etEmail.text.toString(),
-                    binding.etPassword.text.toString()
-                )
-                GlobalScope.async {
-                    val result =mDb?.storeDao()?.addUser(objectUser)
-                    runBlocking {
-                        if (result != 0.toLong()){
-                            Toast.makeText(activity, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
-                        }else{
-                            Toast.makeText(activity, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
+            when {
+                binding.etUsername.text.isNullOrEmpty() -> {
+                    binding.wrapUsername.error = "Username kamu belum diisi"
+                }
+                binding.etEmail.text.isNullOrEmpty() -> {
+                    binding.wrapEmail.error = "Email kamu belum diisi"
+                }
+                binding.etPassword.text.isNullOrEmpty() -> {
+                    binding.wrapPassword.error = "Password kamu belum diisi"
+                }
+                binding.etKonfirPassword.text.isNullOrEmpty() -> {
+                    binding.wrapKonfirPassword.error = "Kamu perlu konfirmasi password"
+                }
+                binding.etPassword.text.toString().lowercase() != binding.etKonfirPassword.text.toString().lowercase() -> {
+                    binding.wrapKonfirPassword.error = "Password tidak sama"
+                    binding.etKonfirPassword.setText("")
+                }
+                else -> {
+                    val objectUser = User(
+                        null,
+                        binding.etUsername.text.toString(),
+                        binding.etEmail.text.toString(),
+                        binding.etPassword.text.toString()
+                    )
+                    GlobalScope.async {
+                        val result =mDb?.storeDao()?.addUser(objectUser)
+                        runBlocking {
+                            if (result != 0.toLong()){
+                                Toast.makeText(activity, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
+                            }else{
+                                Toast.makeText(activity, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
+                            }
+                            onStop()
                         }
-                        onStop()
                     }
+                    val username = binding.etUsername.text.toString()
+                    val bundle = Bundle().apply {
+                        putString(USERNAME, username)
+                    }
+                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment, bundle)
                 }
-                val username = binding.etUsername.text.toString()
-                val bundle = Bundle().apply {
-                    putString(USERNAME, username)
-                }
-                findNavController().navigate(R.id.action_registerFragment_to_loginFragment, bundle)
             }
         }
         binding.btnMasuk.setOnClickListener {
