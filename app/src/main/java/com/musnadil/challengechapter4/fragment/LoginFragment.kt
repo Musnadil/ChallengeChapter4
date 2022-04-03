@@ -33,4 +33,9 @@ class LoginFragment : Fragment() {
             binding.etUsername.setText(username)
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
