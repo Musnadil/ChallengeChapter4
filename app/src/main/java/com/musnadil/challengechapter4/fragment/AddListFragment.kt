@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.musnadil.challengechapter4.Item
+import com.musnadil.challengechapter4.MainActivity
 import com.musnadil.challengechapter4.R
 import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.databinding.FragmentAddListBinding
@@ -55,7 +56,7 @@ class AddListFragment : DialogFragment() {
                     }else{
                         Toast.makeText(requireContext(), "Gagal menambahkan item ke daftar", Toast.LENGTH_SHORT).show()
                     }
-                    onDestroy()
+                    activity?.finish()
                 }
             }
             dialog?.dismiss()
