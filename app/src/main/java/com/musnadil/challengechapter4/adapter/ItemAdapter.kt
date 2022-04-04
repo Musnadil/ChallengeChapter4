@@ -18,8 +18,8 @@ class ItemAdapter (private val listItem : List<Item>): RecyclerView.Adapter<Item
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.binding){
             tvNamaBarang.text = listItem[position].item_name
-            tvHargaBeli.text = listItem[position].purchase_price.toString()
-            tvHargaJual.text = listItem[position].selling_price.toString()
+            tvHargaBeli.text = ": ${listItem[position].purchase_price.toString()}"
+            tvHargaJual.text = ": ${listItem[position].selling_price.toString()}"
         }
     }
     override fun getItemCount(): Int =listItem.size

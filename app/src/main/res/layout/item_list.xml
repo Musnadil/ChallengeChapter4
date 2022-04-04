@@ -5,12 +5,11 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="4dp"
-    app:strokeWidth="2dp"
     android:backgroundTint="@color/white"
-    app:strokeColor="@color/blue"
     app:cardCornerRadius="10dp"
     app:cardElevation="4dp"
-    >
+    app:strokeColor="@color/blue"
+    app:strokeWidth="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,29 +21,49 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nama_barang"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/text_beli"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/harga_beli"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_nama_barang" />
+        <TextView
             android:id="@+id/tv_harga_beli"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/harga_beli"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginStart="25dp"
+            app:layout_constraintStart_toEndOf="@id/text_beli"
+            app:layout_constraintTop_toBottomOf="@id/tv_nama_barang" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/harga_jual"
+            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_nama_barang"
-            />
-
+            app:layout_constraintTop_toBottomOf="@id/tv_harga_beli" />
         <TextView
             android:id="@+id/tv_harga_jual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/harga_jual"
+            android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_harga_beli"
-            />
+            app:layout_constraintStart_toStartOf="@id/tv_harga_beli"
+            app:layout_constraintTop_toBottomOf="@id/tv_harga_beli" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

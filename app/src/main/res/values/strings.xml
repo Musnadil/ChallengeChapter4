@@ -6,8 +6,10 @@
     <string name="store_name">MF Store</string>
     <string name="add_list">add_list</string>
     <string name="nama_barang">Nama Barang</string>
-    <string name="harga_beli">Harga beli</string>
-    <string name="harga_jual">Harga jual</string>
+    <string name="harga_beli">Harga Beli</string>
+    <string name="harga_jual">Harga Jual</string>
     <string name="welcome_user">Welcome user</string>
     <string name="logout">Logout</string>
+    <string name="tambah_barang">Tambah Barang</string>
+    <string name="presentase_keuntungan">Presentase keuntungan</string>
 </resources>
