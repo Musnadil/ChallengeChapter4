@@ -12,4 +12,6 @@
     <string name="logout">Logout</string>
     <string name="tambah_barang">Tambah Barang</string>
     <string name="presentase_keuntungan">Presentase keuntungan</string>
+    <string name="edit_harga">Edit Harga</string>
+    <string name="update_harga">Update Harga</string>
 </resources>

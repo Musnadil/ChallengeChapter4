@@ -1,6 +1,6 @@
 package com.musnadil.challengechapter4.fragment
 
-import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.musnadil.challengechapter4.Item
-import com.musnadil.challengechapter4.MainActivity
 import com.musnadil.challengechapter4.R
 import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.databinding.FragmentAddListBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+
 
 class AddListFragment : DialogFragment() {
     private var _binding: FragmentAddListBinding? = null

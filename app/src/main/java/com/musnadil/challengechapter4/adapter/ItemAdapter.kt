@@ -1,10 +1,14 @@
 package com.musnadil.challengechapter4.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.musnadil.challengechapter4.Item
+import com.musnadil.challengechapter4.MainActivity
 import com.musnadil.challengechapter4.databinding.ItemListBinding
+import com.musnadil.challengechapter4.fragment.AddListFragment
+import com.musnadil.challengechapter4.fragment.UpdateFragment
 
 class ItemAdapter (private val listItem : List<Item>): RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
 
@@ -20,6 +24,12 @@ class ItemAdapter (private val listItem : List<Item>): RecyclerView.Adapter<Item
             tvNamaBarang.text = listItem[position].item_name
             tvHargaBeli.text = ": ${listItem[position].purchase_price.toString()}"
             tvHargaJual.text = ": ${listItem[position].selling_price.toString()}"
+
+        itemRv.setOnClickListener{
+            val activity = it.context as MainActivity
+            val dialogFragment = UpdateFragment(listItem[position].item_name,listItem[position].purchase_price.toString())
+            dialogFragment.show(activity.supportFragmentManager, null)
+        }
         }
     }
     override fun getItemCount(): Int =listItem.size
