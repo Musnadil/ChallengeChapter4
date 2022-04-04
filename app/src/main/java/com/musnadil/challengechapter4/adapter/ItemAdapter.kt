@@ -27,7 +27,7 @@ class ItemAdapter (private val listItem : List<Item>): RecyclerView.Adapter<Item
 
         itemRv.setOnClickListener{
             val activity = it.context as MainActivity
-            val dialogFragment = UpdateFragment(listItem[position].item_name,listItem[position].purchase_price.toString())
+            val dialogFragment = UpdateFragment(listItem[position])
             dialogFragment.show(activity.supportFragmentManager, null)
         }
         }
