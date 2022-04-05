@@ -1,14 +1,11 @@
 package com.musnadil.challengechapter4.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.musnadil.challengechapter4.Item
-import com.musnadil.challengechapter4.LoginActivity
 import com.musnadil.challengechapter4.MainActivity
 import com.musnadil.challengechapter4.databinding.ItemListBinding
-import com.musnadil.challengechapter4.fragment.AddListFragment
 import com.musnadil.challengechapter4.fragment.UpdateFragment
 
 class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
@@ -27,7 +24,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
             tvHargaJual.text = ": ${listItem[position].selling_price.toString()}"
 
         itemRv.setOnClickListener{
-            val activity = it.context as LoginActivity
+            val activity = it.context as MainActivity
             val dialogFragment = UpdateFragment(listItem[position])
             dialogFragment.show(activity.supportFragmentManager, null)
         }

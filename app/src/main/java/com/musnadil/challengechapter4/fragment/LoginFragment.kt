@@ -1,7 +1,6 @@
 package com.musnadil.challengechapter4.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +9,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.musnadil.challengechapter4.LoginActivity
 import com.musnadil.challengechapter4.MainActivity
 import com.musnadil.challengechapter4.R
 import com.musnadil.challengechapter4.StoreDatabase
@@ -102,7 +99,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun closeKeyboard() {
-        val activity = activity as LoginActivity
+        val activity = activity as MainActivity
 
         val view = activity.currentFocus
         if (view != null) {
