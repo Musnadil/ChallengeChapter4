@@ -2,13 +2,14 @@ package com.musnadil.challengechapter4.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.musnadil.challengechapter4.LoginActivity
@@ -23,6 +24,11 @@ class LoginFragment : Fragment() {
     private var mDb: StoreDatabase? = null
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    companion object{
+        const val SPUSER = "user_login"
+        const val USERNAME = "username"
+        const val PASSWORD = "password"
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +41,13 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mDb = StoreDatabase.getInstance(requireContext())
 
+        val preferences = this.activity?.getSharedPreferences(SPUSER, Context.MODE_PRIVATE)
+        if (preferences!!.getString(USERNAME,null)!=null){
+            startActivity(Intent(this.context,MainActivity::class.java))
+            val username = preferences.getString(USERNAME,null)
+            Toast.makeText(context, "Selamat datang $username", Toast.LENGTH_SHORT).show()
+            activity?.finish()
+        }
         binding.btnDaftar.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
@@ -72,8 +85,12 @@ class LoginFragment : Fragment() {
                                 }
                                 snackbar.show()
                             } else {
-                                Toast.makeText(activity, "Selamat datang ${binding.etUsername.text.toString()}", Toast.LENGTH_SHORT).show()
-                                startActivity(Intent(activity,MainActivity::class.java))
+                                val editorSp : SharedPreferences.Editor = preferences!!.edit()
+                                editorSp.putString(USERNAME,binding.etUsername.text.toString())
+                                editorSp.putString(PASSWORD,binding.etPassword.text.toString())
+                                editorSp.apply()
+                                Toast.makeText(context, "Selamat datang ${binding.etUsername.text}", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(context,MainActivity::class.java))
                                 onDestroy()
                                 activity?.finish()
                             }

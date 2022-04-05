@@ -10,8 +10,8 @@ import com.musnadil.challengechapter4.databinding.ItemListBinding
 import com.musnadil.challengechapter4.fragment.AddListFragment
 import com.musnadil.challengechapter4.fragment.UpdateFragment
 
-class ItemAdapter (private val listItem : List<Item>): RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
-
+class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>(){
+    private val listItem = mutableListOf<Item>()
     class ViewHolder(val binding : ItemListBinding):RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,4 +33,9 @@ class ItemAdapter (private val listItem : List<Item>): RecyclerView.Adapter<Item
         }
     }
     override fun getItemCount(): Int =listItem.size
+    fun setData(itemList : List<Item>){
+        listItem.clear()
+        listItem.addAll(itemList)
+        notifyDataSetChanged()
+    }
 }
