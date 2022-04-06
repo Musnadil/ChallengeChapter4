@@ -3,11 +3,11 @@ package com.musnadil.challengechapter4.fragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.musnadil.challengechapter4.R
@@ -15,6 +15,7 @@ import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.adapter.ItemAdapter
 import com.musnadil.challengechapter4.databinding.FragmentMainBinding
 import kotlinx.coroutines.*
+
 
 @DelicateCoroutinesApi
 class MainFragment : Fragment() {
@@ -41,7 +42,7 @@ class MainFragment : Fragment() {
         mDb = StoreDatabase.getInstance(requireContext())
         adapter = ItemAdapter()
         binding.rvList.adapter = adapter
-        mDb = StoreDatabase.getInstance(requireContext())
+
         binding.rvList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
         fetchData()
         logout()

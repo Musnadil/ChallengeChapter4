@@ -74,7 +74,6 @@ class RegisterFragment : Fragment() {
                             }else{
                                 Toast.makeText(activity, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
                             }
-                            onStop()
                         }
                     }
                 }

@@ -80,7 +80,6 @@ class UpdateFragment() : DialogFragment() {
                                 Toast.makeText(it.context, "Harga gagal diubah", Toast.LENGTH_SHORT)
                                     .show()
                             }
-                            activity?.finish()
                         }
                     }
                     dialog?.dismiss()

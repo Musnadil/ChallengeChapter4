@@ -19,7 +19,11 @@
             app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/zoom_in"
+            app:exitAnim="@anim/zoom_out"/>
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -42,13 +46,22 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/zoom_in"
+            app:exitAnim="@anim/zoom_out"
+            />
         <action
             android:id="@+id/action_mainFragment_to_addListFragment"
-            app:destination="@id/addListFragment" />
+            app:destination="@id/addListFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_mainFragment_to_updateFragment"
-            app:destination="@id/updateFragment" />
+            app:destination="@id/updateFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <dialog
         android:id="@+id/addListFragment"
