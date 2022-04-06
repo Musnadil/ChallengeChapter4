@@ -1,6 +1,5 @@
 package com.musnadil.challengechapter4.fragment
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -15,11 +14,9 @@ import com.musnadil.challengechapter4.R
 import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.adapter.ItemAdapter
 import com.musnadil.challengechapter4.databinding.FragmentMainBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
+@DelicateCoroutinesApi
 class MainFragment : Fragment() {
 
     private var mDb: StoreDatabase? = null
@@ -39,7 +36,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         preferences = requireContext().getSharedPreferences(LoginFragment.SPUSER, Context.MODE_PRIVATE)
-        binding.tvWelcome.text = "Welcome ${preferences?.getString(LoginFragment.USERNAME,null)}"
+        binding.tvWelcome.text = "Welcome ${preferences.getString(LoginFragment.USERNAME,null)}"
 
         mDb = StoreDatabase.getInstance(requireContext())
         adapter = ItemAdapter()
@@ -48,10 +45,6 @@ class MainFragment : Fragment() {
         binding.rvList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
         fetchData()
         logout()
-        addList()
-
-    }
-    fun addList(){
         binding.fabNewItem.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_addListFragment)
         }
@@ -68,8 +61,8 @@ class MainFragment : Fragment() {
     }
     fun logout(){
         binding.tvLogout.setOnClickListener {
-            val dialog_konfirmasi = AlertDialog.Builder(requireContext())
-            dialog_konfirmasi.apply{
+            val dialogKonfirmasi = AlertDialog.Builder(requireContext())
+            dialogKonfirmasi.apply{
                 setTitle("Logout")
                 setMessage("Apakah anda yakin ingin log out?")
                 setNegativeButton("Batal"){dialog,which->
@@ -78,11 +71,11 @@ class MainFragment : Fragment() {
                 setPositiveButton("Logout"){dialog,which->
                     dialog.dismiss()
 
-                    preferences.edit().clear().commit()
+                    preferences.edit().clear().apply()
                     findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
                 }
             }
-            dialog_konfirmasi.show()
+            dialogKonfirmasi.show()
         }
     }
     override fun onDestroy() {

@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.musnadil.challengechapter4.R
 import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.User
 import com.musnadil.challengechapter4.databinding.FragmentRegisterBinding
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 @DelicateCoroutinesApi
 class RegisterFragment : Fragment() {
@@ -65,20 +63,20 @@ class RegisterFragment : Fragment() {
                     )
                     GlobalScope.async {
                         val result =mDb?.storeDao()?.addUser(objectUser)
-                        runBlocking {
+                        runBlocking(Dispatchers.Main) {
                             if (result != 0.toLong()){
                                 Toast.makeText(activity, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show()
+                                val username = binding.etUsername.text.toString()
+                                val bundle = Bundle().apply {
+                                    putString(USERNAME, username)
+                                }
+                                findNavController().navigate(R.id.action_registerFragment_to_loginFragment, bundle)
                             }else{
                                 Toast.makeText(activity, "Pendaftaran gagal", Toast.LENGTH_SHORT).show()
                             }
                             onStop()
                         }
                     }
-                    val username = binding.etUsername.text.toString()
-                    val bundle = Bundle().apply {
-                        putString(USERNAME, username)
-                    }
-                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment, bundle)
                 }
             }
         }

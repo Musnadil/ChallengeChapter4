@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.musnadil.challengechapter4.MainActivity
 import com.musnadil.challengechapter4.R
@@ -22,6 +23,7 @@ class LoginFragment : Fragment() {
     private var mDb: StoreDatabase? = null
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
     companion object{
         const val SPUSER = "user_login"
         const val USERNAME = "username"

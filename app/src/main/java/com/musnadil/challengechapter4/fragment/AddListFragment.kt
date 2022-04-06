@@ -26,6 +26,7 @@ class AddListFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         dialog?.window?.setBackgroundDrawableResource(R.drawable.rounded_dialog)
+        dialog?.window?.attributes?.windowAnimations = R.style.MyDialogAnimation
         _binding = FragmentAddListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -42,24 +43,37 @@ class AddListFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         mDb = StoreDatabase.getInstance(requireContext())
         binding.btnTambahBarang.setOnClickListener {
-            val purchase: Int = binding.etPurchasePrice.text.toString().toInt()
-            val precentage: Int = binding.etPrecentage.text.toString().toInt()
-            val selling: Int = purchase + (purchase * precentage / 100)
-            val objectItem = Item(
-                null, binding.etItemName.text.toString(), purchase, selling
-            )
-            GlobalScope.async {
-                val result = mDb?.itemDao()?.insertItem(objectItem)
-                runBlocking {
-                    if (result != 0.toLong()) {
-                        Toast.makeText(requireContext(), "${objectItem.item_name} berhasil ditambahkan ke daftar", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(requireContext(), "Gagal menambahkan item ke daftar", Toast.LENGTH_SHORT).show()
+
+            when {
+                binding.etItemName.text.isNullOrEmpty() -> {
+                    binding.wrapItemName.error = getString(R.string.warning_item_name)
+                }
+                binding.etPurchasePrice.text.isNullOrEmpty() -> {
+                    binding.wrapPurchasePrice.error = getString(R.string.warning_purchase_price)
+                }
+                binding.etPrecentage.text.isNullOrEmpty() -> {
+                    binding.etPrecentage.error = getString(R.string.warning_precent)
+                }
+                else -> {
+                    val purchase: Int = binding.etPurchasePrice.text.toString().toInt()
+                    val precentage: Int = binding.etPrecentage.text.toString().toInt()
+                    val selling: Int = purchase + (purchase * precentage / 100)
+                    val objectItem = Item(
+                        null, binding.etItemName.text.toString(), purchase, selling
+                    )
+                    GlobalScope.async {
+                        val result = mDb?.itemDao()?.insertItem(objectItem)
+                        runBlocking {
+                            if (result != 0.toLong()) {
+                                Toast.makeText(requireContext(),"${objectItem.item_name} berhasil ditambahkan ke daftar",Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(requireContext(),"Gagal menambahkan item ke daftar",Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
-                    activity?.finish()
+                    dialog?.dismiss()
                 }
             }
-            dialog?.dismiss()
         }
     }
 

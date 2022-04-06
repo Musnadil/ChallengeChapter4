@@ -54,9 +54,11 @@
         android:id="@+id/addListFragment"
         android:name="com.musnadil.challengechapter4.fragment.AddListFragment"
         android:label="fragment_update"
-        tools:layout="@layout/fragment_update" />
+        tools:layout="@layout/fragment_add_list"/>
+
     <dialog
         android:id="@+id/updateFragment"
         android:name="com.musnadil.challengechapter4.fragment.UpdateFragment"
-        android:label="UpdateFragment" />
+        android:label="UpdateFragment"
+        tools:layout="@layout/fragment_update"/>
 </navigation>

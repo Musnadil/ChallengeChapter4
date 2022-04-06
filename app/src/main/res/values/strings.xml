@@ -14,4 +14,8 @@
     <string name="presentase_keuntungan">Presentase keuntungan</string>
     <string name="edit_harga">Edit Harga</string>
     <string name="update_harga">Update Harga</string>
+    <string name="warning_item_name">Nama barang harus diisi yaa</string>
+    <string name="warning_purchase_price">Harga barang harus diisi yaa</string>
+    <string name="warning_precent">Kamu harus tentuin keuntunganmu</string>
+
 </resources>
