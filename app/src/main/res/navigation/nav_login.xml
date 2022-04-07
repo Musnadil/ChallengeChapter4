@@ -54,14 +54,10 @@
             />
         <action
             android:id="@+id/action_mainFragment_to_addListFragment"
-            app:destination="@id/addListFragment"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/addListFragment"/>
         <action
             android:id="@+id/action_mainFragment_to_updateFragment"
-            app:destination="@id/updateFragment"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/updateFragment"/>
     </fragment>
     <dialog
         android:id="@+id/addListFragment"

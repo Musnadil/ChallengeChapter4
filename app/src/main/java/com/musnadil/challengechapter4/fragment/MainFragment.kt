@@ -49,6 +49,11 @@ class MainFragment : Fragment() {
         binding.fabNewItem.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_addListFragment)
         }
+
+        binding.swipeLayout.setOnRefreshListener {
+            fetchData()
+            binding.swipeLayout.isRefreshing = false
+        }
     }
     fun fetchData(){
         GlobalScope.launch {
