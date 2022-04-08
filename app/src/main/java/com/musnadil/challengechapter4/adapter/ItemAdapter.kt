@@ -11,8 +11,10 @@ import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.databinding.ItemListBinding
 import com.musnadil.challengechapter4.fragment.MainFragment
 import com.musnadil.challengechapter4.fragment.UpdateFragment
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
     private val listItem = mutableListOf<Item>()
@@ -41,14 +43,13 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
                         val mDb = StoreDatabase.getInstance(holder.itemView.context)
                         GlobalScope.async {
                             val result = mDb?.itemDao()?.deleteItem(listItem[position])
-                            (holder.itemView.context as MainActivity).runOnUiThread {
+                            runBlocking(Dispatchers.Main) {
                                 if (result != 0 ){
                                     Toast.makeText(it.context, "${listItem[position].item_name} berhasil dihapus", Toast.LENGTH_SHORT).show()
                                 }else{
                                     Toast.makeText(it.context, "${listItem[position].item_name} gagal dihapus", Toast.LENGTH_SHORT).show()
                                 }
                             }
-                            (holder.itemView.context as MainFragment).fetchData()
                         }
                     }
                     .setNegativeButton("Batal"){p0,p1->
@@ -64,6 +65,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = listItem.size
     fun setData(itemList: List<Item>) {
+
         listItem.clear()
         listItem.addAll(itemList)
         notifyDataSetChanged()

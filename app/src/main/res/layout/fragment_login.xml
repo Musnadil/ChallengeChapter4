@@ -40,15 +40,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        app:errorEnabled="true"
-        app:endIconMode="password_toggle">
+        app:endIconMode="password_toggle"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,9 +63,9 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_masuk"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="32dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/blue"
         android:text="Masuk"

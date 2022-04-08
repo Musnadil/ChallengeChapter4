@@ -102,7 +102,6 @@ class LoginFragment : Fragment() {
 
     private fun closeKeyboard() {
         val activity = activity as MainActivity
-
         val view = activity.currentFocus
         if (view != null) {
             val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

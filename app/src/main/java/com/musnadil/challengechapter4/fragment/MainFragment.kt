@@ -36,14 +36,16 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        preferences = requireContext().getSharedPreferences(LoginFragment.SPUSER, Context.MODE_PRIVATE)
-        binding.tvWelcome.text = "Welcome ${preferences.getString(LoginFragment.USERNAME,null)}"
+        preferences =
+            requireContext().getSharedPreferences(LoginFragment.SPUSER, Context.MODE_PRIVATE)
+        binding.tvWelcome.text = "Welcome ${preferences.getString(LoginFragment.USERNAME, null)}"
 
         mDb = StoreDatabase.getInstance(requireContext())
         adapter = ItemAdapter()
         binding.rvList.adapter = adapter
 
-        binding.rvList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
+        binding.rvList.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         fetchData()
         logout()
         binding.fabNewItem.setOnClickListener {
@@ -55,26 +57,36 @@ class MainFragment : Fragment() {
             binding.swipeLayout.isRefreshing = false
         }
     }
-    fun fetchData(){
+
+    fun fetchData() {
         GlobalScope.launch {
             val listItem = mDb?.itemDao()?.getAllItem()
             runBlocking(Dispatchers.Main) {
+                if (listItem.isNullOrEmpty()) {
+                    binding.handlerLottie.visibility = View.VISIBLE
+                    binding.tvHandler.visibility = View.VISIBLE
+                }else{
+                    binding.handlerLottie.visibility = View.GONE
+                    binding.tvHandler.visibility = View.GONE
+                }
                 listItem?.let {
                     adapter.setData(it)
                 }
+
             }
         }
     }
-    fun logout(){
+
+    fun logout() {
         binding.tvLogout.setOnClickListener {
             val dialogKonfirmasi = AlertDialog.Builder(requireContext())
-            dialogKonfirmasi.apply{
+            dialogKonfirmasi.apply {
                 setTitle("Logout")
                 setMessage("Apakah anda yakin ingin log out?")
-                setNegativeButton("Batal"){dialog,which->
+                setNegativeButton("Batal") { dialog, which ->
                     dialog.dismiss()
                 }
-                setPositiveButton("Logout"){dialog,which->
+                setPositiveButton("Logout") { dialog, which ->
                     dialog.dismiss()
 
                     preferences.edit().clear().apply()
@@ -84,10 +96,12 @@ class MainFragment : Fragment() {
             dialogKonfirmasi.show()
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
     override fun onResume() {
         super.onResume()
         fetchData()

@@ -17,5 +17,6 @@
     <string name="warning_item_name">Nama barang harus diisi yaa</string>
     <string name="warning_purchase_price">Harga barang harus diisi yaa</string>
     <string name="warning_precent">Kamu harus tentuin keuntunganmu</string>
+    <string name="data_masih_kosong_nih">Data masih kosong nih :(</string>
 
 </resources>
