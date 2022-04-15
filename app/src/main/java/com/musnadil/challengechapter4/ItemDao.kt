@@ -10,12 +10,12 @@ interface ItemDao {
     fun getAllItem():List<Item>
 
     @Insert(onConflict = REPLACE)
-    fun insertItem(student: Item):Long
+    fun insertItem(item: Item):Long
 
     @Update
-    fun updateItem(student: Item):Int
+    fun updateItem(item: Item):Int
 
     @Delete
-    fun deleteItem(student: Item):Int
+    fun deleteItem(item: Item):Int
 
 }

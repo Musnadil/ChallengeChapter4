@@ -1,6 +1,5 @@
 package com.musnadil.challengechapter4.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.musnadil.challengechapter4.Item
+import com.musnadil.challengechapter4.ItemRepository
 import com.musnadil.challengechapter4.R
 import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.databinding.FragmentAddListBinding
@@ -20,6 +20,8 @@ class AddListFragment : DialogFragment() {
     private var _binding: FragmentAddListBinding? = null
     private val binding get() = _binding!!
     var mDb: StoreDatabase? = null
+    lateinit var itemRepository: ItemRepository
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +44,8 @@ class AddListFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mDb = StoreDatabase.getInstance(requireContext())
+        itemRepository = ItemRepository(requireContext())
+
         binding.btnTambahBarang.setOnClickListener {
 
             when {
@@ -62,7 +66,7 @@ class AddListFragment : DialogFragment() {
                         null, binding.etItemName.text.toString(), purchase, selling
                     )
                     GlobalScope.async {
-                        val result = mDb?.itemDao()?.insertItem(objectItem)
+                        val result = itemRepository.insertItem(objectItem)
                         runBlocking {
                             if (result != 0.toLong()) {
                                 Toast.makeText(requireContext(),"${objectItem.item_name} berhasil ditambahkan ke daftar",Toast.LENGTH_SHORT).show()

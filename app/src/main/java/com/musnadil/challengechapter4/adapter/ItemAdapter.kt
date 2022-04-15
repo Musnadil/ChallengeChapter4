@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.musnadil.challengechapter4.Item
+import com.musnadil.challengechapter4.ItemRepository
 import com.musnadil.challengechapter4.MainActivity
 import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.databinding.ItemListBinding
-import com.musnadil.challengechapter4.fragment.MainFragment
 import com.musnadil.challengechapter4.fragment.UpdateFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -40,9 +40,10 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
             btnDelete.setOnClickListener {
                 AlertDialog.Builder(it.context)
                     .setPositiveButton("Ya"){p0,p1 ->
+                        val itemRepository = ItemRepository(holder.itemView.context)
                         val mDb = StoreDatabase.getInstance(holder.itemView.context)
                         GlobalScope.async {
-                            val result = mDb?.itemDao()?.deleteItem(listItem[position])
+                            val result = itemRepository.deleteItem(listItem[position])
                             runBlocking(Dispatchers.Main) {
                                 if (result != 0 ){
                                     Toast.makeText(it.context, "${listItem[position].item_name} berhasil dihapus", Toast.LENGTH_SHORT).show()

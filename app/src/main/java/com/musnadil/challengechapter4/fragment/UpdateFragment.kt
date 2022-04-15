@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.musnadil.challengechapter4.Item
+import com.musnadil.challengechapter4.ItemRepository
 import com.musnadil.challengechapter4.R
 import com.musnadil.challengechapter4.StoreDatabase
 import com.musnadil.challengechapter4.databinding.FragmentUpdateBinding
@@ -21,7 +22,7 @@ class UpdateFragment() : DialogFragment() {
     constructor(itemSelected:Item):this(){
         this.itemSelected = itemSelected
     }
-
+    lateinit var itemRepository: ItemRepository
     var mDb:StoreDatabase?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +45,8 @@ class UpdateFragment() : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mDb = StoreDatabase.getInstance(requireContext())
+        itemRepository = ItemRepository(requireContext())
+
 
         if(this::itemSelected.isInitialized){
             binding.tvItemName.text = "Update Harga ${itemSelected.item_name}"
@@ -68,7 +71,7 @@ class UpdateFragment() : DialogFragment() {
                     objectItem.selling_price = selling
 
                     GlobalScope.async {
-                        val result = mDb?.itemDao()?.updateItem(objectItem)
+                        val result = itemRepository.updateItem(objectItem)
                         runBlocking {
                             if (result != 0) {
                                 Toast.makeText(

@@ -10,8 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.musnadil.challengechapter4.R
-import com.musnadil.challengechapter4.StoreDatabase
+import com.musnadil.challengechapter4.*
 import com.musnadil.challengechapter4.adapter.ItemAdapter
 import com.musnadil.challengechapter4.databinding.FragmentMainBinding
 import kotlinx.coroutines.*
@@ -25,6 +24,7 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: ItemAdapter
     private lateinit var preferences: SharedPreferences
+    lateinit var itemRepository: ItemRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +36,12 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        preferences =
-            requireContext().getSharedPreferences(LoginFragment.SPUSER, Context.MODE_PRIVATE)
+        preferences = requireContext().getSharedPreferences(LoginFragment.SPUSER, Context.MODE_PRIVATE)
         binding.tvWelcome.text = "Welcome ${preferences.getString(LoginFragment.USERNAME, null)}"
 
         mDb = StoreDatabase.getInstance(requireContext())
+        itemRepository = ItemRepository(requireContext())
+
         adapter = ItemAdapter()
         binding.rvList.adapter = adapter
 
@@ -60,7 +61,7 @@ class MainFragment : Fragment() {
 
     fun fetchData() {
         GlobalScope.launch {
-            val listItem = mDb?.itemDao()?.getAllItem()
+                val listItem = itemRepository?.getAllItem()
             runBlocking(Dispatchers.Main) {
                 if (listItem.isNullOrEmpty()) {
                     binding.handlerLottie.visibility = View.VISIBLE
